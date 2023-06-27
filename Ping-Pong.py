@@ -1,5 +1,5 @@
 from pygame import *
-
+from random import randint
 
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, player_speed, wight, height):
@@ -61,17 +61,25 @@ while game:
         window.fill(back)
         ball.rect.x += speed_x
         ball.rect.y += speed_y
-        if ball.rect.y <= 3 or ball.rect.y >= 447:
-            speed_y *= -1
+        if ball.rect.y <= 5 or ball.rect.y >= 445:
+            if speed_y >= 0:
+                speed_y = randint(-9, -3)
+            else:
+                speed_y = randint(3, 9)
+            if ball.rect.y <= 5:
+                ball.rect.y = 5
+            else:
+                ball.rect.y = 445
         if sprite.collide_rect(ball, player_1) or sprite.collide_rect(ball, player_2):
-            speed_x *= -1
-        if ball.rect.x <= 3:
-            speed_x *= -1
+            if speed_x >= 0:
+                speed_x = randint(-9, -3)
+            else:
+                speed_x = randint(3, 9)
+        if ball.rect.x <= 5:
             win_text_1 = font_1.render('Победил 2 игрок', True, (0, 0 , 0))
             window.blit(win_text_1, (100, 100))
             finish = True
-        if ball.rect.x >= 647:
-            speed_x *= -1
+        if ball.rect.x >= 645:
             win_text_2 = font_1.render('Победил 1 игрок', True, (0, 0, 0))
             window.blit(win_text_2, (200, 200))
             finish = True
